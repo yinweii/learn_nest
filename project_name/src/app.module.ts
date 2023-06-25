@@ -1,14 +1,42 @@
-import { ProductModule } from './modules/product.module';
-import { ProductController } from './modules/product.controller';
+import { DatabaseModule } from './modules/database/database.module';
 
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductService } from './modules/product.service';
+
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
+import * as Joi from '@hapi/joi';
+import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './modules/user/user.module';
+import { UserService } from './modules/user/user.service';
+import { CategoryModule } from './modules/category/category.module';
+import { OrderModule } from './modules/order/order.module';
+import { ProductModule } from './modules/product/product.module';
+import { MenuModule } from './modules/menu/menu.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
-  imports: [ProductModule],
-  controllers: [ProductController, AppController],
-  providers: [AppService, ProductService],
+  imports: [
+    DatabaseModule,
+    UserModule,
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        POSTGRES_HOST: Joi.string().required(),
+        POSTGRES_PORT: Joi.number().required(),
+        POSTGRES_USER: Joi.string().required(),
+        POSTGRES_PASSWORD: Joi.string().required(),
+        POSTGRES_DB: Joi.string().required(),
+        PORT: Joi.number(),
+      }),
+    }),
+    CategoryModule,
+    OrderModule,
+    ProductModule,
+    MenuModule,
+    TransactionModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
