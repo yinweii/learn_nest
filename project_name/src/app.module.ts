@@ -15,6 +15,7 @@ import { OrderModule } from './modules/order/order.module';
 import { ProductModule } from './modules/product/product.module';
 import { MenuModule } from './modules/menu/menu.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { TransactionModule } from './modules/transaction/transaction.module';
     ProductModule,
     MenuModule,
     TransactionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

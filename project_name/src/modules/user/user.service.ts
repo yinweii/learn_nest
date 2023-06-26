@@ -13,9 +13,9 @@ export class UserService {
 
   create(createUserDto: CreateUserDto): Promise<User> {
     let user: User = new User();
-    user.first_name = createUserDto.first_name;
-    user.last_name = createUserDto.last_name;
-    user.age = createUserDto.age;
+    user.name = createUserDto.name;
+    user.email = createUserDto.email;
+    user.password = createUserDto.password;
     return this.userRepositoty.save(user);
   }
 
@@ -23,8 +23,12 @@ export class UserService {
     return this.userRepositoty.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findByUserName(name: string) {
+    return await this.userRepositoty.findOne({
+      where: {
+        name: name,
+      },
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

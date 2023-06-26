@@ -18,4 +18,5 @@ export class CreateProductDto {
   pro_active: number | 0;
   pro_status: number | 0;
   pro_hot: number | 0;
+  pro_slug: string;
 }

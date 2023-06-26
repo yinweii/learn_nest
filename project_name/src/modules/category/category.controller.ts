@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -15,6 +16,7 @@ import { ResponseData } from 'src/global/response_data';
 import { HttpMessage } from 'src/global/global_enum';
 import { Request } from 'express';
 import { Paging } from 'src/global/paging';
+import { AuthGuard } from '../auth/auth.guard';
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
@@ -25,7 +27,7 @@ export class CategoryController {
 
     return new ResponseData(200, true, HttpMessage.SUCCESS, result);
   }
-
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(@Req() request: Request) {
     const paging = {
@@ -33,11 +35,11 @@ export class CategoryController {
       page_size: request.query.page_size || 10,
     };
     const filter = {
-      hot: request.query.hot || "",
-      status: request.query.status || "",
-    }
+      hot: request.query.hot || '',
+      status: request.query.status || '',
+    };
 
-    const result = await this.categoryService.findAll(paging ,filter);
+    const result = await this.categoryService.findAll(paging, filter);
     const [data, total] = result;
 
     const pagingData = new Paging(
