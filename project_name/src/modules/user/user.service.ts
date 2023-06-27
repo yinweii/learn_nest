@@ -12,11 +12,8 @@ export class UserService {
   ) {}
 
   create(createUserDto: CreateUserDto): Promise<User> {
-    let user: User = new User();
-    user.name = createUserDto.name;
-    user.email = createUserDto.email;
-    user.password = createUserDto.password;
-    return this.userRepositoty.save(user);
+    const newData = this.userRepositoty.create(createUserDto);
+    return this.userRepositoty.save(newData);
   }
 
   findAll(): Promise<User[]> {

@@ -6,3 +6,6 @@ export enum HttpMessage {
   ERROR = 'Error',
   SUCCESS = 'Success',
 }
+export enum PostgresErrorCode {
+  UniqueViolation = '23505',
+}

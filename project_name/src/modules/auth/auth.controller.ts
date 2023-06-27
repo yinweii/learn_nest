@@ -21,12 +21,13 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async signIn(@Body() signInDto: Record<string, any>) {
-    const result = await this.authService.signIn(
-      signInDto.username,
-      signInDto.password,
-    );
+  async signIn(@Body() signInDto: CreateUserDto) {
+    const result = await this.authService.signIn(signInDto);
     return new ResponseData(200, true, HttpMessage.SUCCESS, result);
+  }
+  @Post('register')
+  async register(@Body() createUserDto: CreateUserDto) {
+    return await this.authService.register(createUserDto);
   }
 
   @UseGuards(AuthGuard)
